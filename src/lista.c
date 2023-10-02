@@ -117,6 +117,7 @@ void *lista_quitar(lista_t *lista) {
   if (lista->nodo_inicio == lista->nodo_fin) {
     lista->nodo_inicio = NULL;
     lista->nodo_fin = NULL;
+	free(ultimo_nodo);  
     return elemento;
   }
 
@@ -127,6 +128,7 @@ void *lista_quitar(lista_t *lista) {
   }
   nodo_inicial->siguiente = NULL;
   lista->nodo_fin = nodo_inicial;
+  free(ultimo_nodo);  
 
   return elemento;
 }
