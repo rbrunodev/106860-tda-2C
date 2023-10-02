@@ -172,7 +172,7 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion) {
     nodo_inicial = nodo_inicial->siguiente;
   }
 
-  void *elemento = nodo_inicial->elemento;
+  elemento = nodo_inicial->elemento;
 
   if (!nodo_anterior) {
     lista->nodo_inicio = nodo_inicial->siguiente;
