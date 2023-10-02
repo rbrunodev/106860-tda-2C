@@ -244,46 +244,70 @@ bool lista_vacia(lista_t *lista) {
   return lista->nodo_inicio == NULL;
 }
 
+// void lista_destruir(lista_t *lista) {
+//   // if(!lista){
+//   //   return;
+//   // }
+
+//   nodo_t *nodo_actual = lista->nodo_inicio;
+
+//   while (nodo_actual) {
+//     nodo_t *nodo_a_eliminar = nodo_actual;
+//     nodo_actual = nodo_actual->siguiente;
+//     free(nodo_a_eliminar);
+//   }
+
+//   free(lista);
+// }
+static void lista_destruir_nodos(lista_t *lista, void (*funcion)(void *)) {
+    nodo_t *nodo_actual = lista->nodo_inicio;
+    while (nodo_actual) {
+        nodo_t *nodo_a_eliminar = nodo_actual;
+        nodo_actual = nodo_actual->siguiente;
+
+        if (funcion) {
+            funcion(nodo_a_eliminar->elemento);
+        }
+
+        free(nodo_a_eliminar);
+    }
+}
+
 void lista_destruir(lista_t *lista) {
-  if(!lista){
-    return;
-  }
-
-  if(!lista->nodo_inicio || !lista->nodo_fin){
+    if (!lista) {
+        return;
+    }
+    lista_destruir_nodos(lista, NULL); 
     free(lista);
-    return;
-  }
-
-  nodo_t *nodo_actual = lista->nodo_inicio;
-
-  while (nodo_actual) {
-    nodo_t *nodo_a_eliminar = nodo_actual;
-    nodo_actual = nodo_actual->siguiente;
-    free(nodo_a_eliminar);
-  }
-
-  free(lista);
 }
 
 void lista_destruir_todo(lista_t *lista, void (*funcion)(void *)) {
-  if (!lista) {
-    return;
-  }
-
-  nodo_t *nodo_actual = lista->nodo_inicio;
-  while (nodo_actual) {
-    nodo_t *nodo_a_eliminar = nodo_actual;
-    nodo_actual = nodo_actual->siguiente;
-
-    if (funcion) {
-      funcion(nodo_a_eliminar->elemento);
+    if (!lista) {
+        return;
     }
-
-    free(nodo_a_eliminar);
-  }
-
-  free(lista);
+    lista_destruir_nodos(lista, funcion); 
+    free(lista);
 }
+
+// void lista_destruir_todo(lista_t *lista, void (*funcion)(void *)) {
+//   if (!lista) {
+//     return;
+//   }
+
+//   nodo_t *nodo_actual = lista->nodo_inicio;
+//   while (nodo_actual) {
+//     nodo_t *nodo_a_eliminar = nodo_actual;
+//     nodo_actual = nodo_actual->siguiente;
+
+//     if (funcion) {
+//       funcion(nodo_a_eliminar->elemento);
+//     }
+
+//     free(nodo_a_eliminar);
+//   }
+
+//   free(lista);
+// }
 
 lista_iterador_t *lista_iterador_crear(lista_t *lista) {
   if (!lista) {
