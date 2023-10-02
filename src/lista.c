@@ -11,7 +11,7 @@ typedef struct nodo {
 typedef struct lista {
   nodo_t *nodo_inicio;
   nodo_t *nodo_fin;
-  int *cantidad;
+  size_t *cantidad;
 } lista;
 
 struct lista_iterador {
