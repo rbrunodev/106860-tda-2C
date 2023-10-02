@@ -2,18 +2,11 @@
 #include <stdio.h>
 #include "src/lista.h"
 
-void prueba_simple()
-{
-	int i = 14;
-	int j = 16;
-	pa2m_afirmar(i != j, "i=14 es diferente de j=16");
-}
-
 void crear_lista_vacia()
 {
 	lista_t *lista = lista_crear();
 	pa2m_afirmar(lista_tamanio(lista) == 0 && lista_vacia(lista), "Se prueba crear una lista valida y verificar que empiece vacia.");
-	lista_destruir(lista);
+	lista_destruir_todo(lista, "free");
 }
 
 void insertar_final_lista_vacia()
@@ -22,6 +15,8 @@ void insertar_final_lista_vacia()
 	int elemento = 14;
 	pa2m_afirmar(lista_insertar(lista, &elemento) == lista && lista_vacia(lista) == false && lista_tamanio(lista) == 1 ,
 	 "Se prueba insertar al final en una lista nula");
+
+	lista_destruir_todo(lista, "free");
 }
 
 void insertar_lista_4_elementos(lista_t *lista){
@@ -44,6 +39,8 @@ void verificar_posicion_insertar_final(){
 	
 	pa2m_afirmar(lista_insertar(lista, &elemento5) == lista && lista_vacia(lista) == false && lista_elemento_en_posicion(lista, 5) != NULL ,
 	 "Se prueba insertar al final en una lista con elementos y se verifica que está en la posición correcta");
+
+	lista_destruir_todo(lista, "free");
 }
 
 void insertar_elemento_null_final(){
@@ -54,6 +51,8 @@ void insertar_elemento_null_final(){
 
 	pa2m_afirmar(lista_insertar(lista, elemento) == lista && lista_vacia(lista) == false && lista_elemento_en_posicion(lista, 5) != NULL ,
 	 "Se prueba insertar al final en una lista nula");
+	
+	lista_destruir_todo(lista, "free");
 }
 
 void insertar_x_posicion_lista_nula(){
@@ -75,6 +74,8 @@ void insertar_x_posicion_lista_vacia(){
 
 	pa2m_afirmar(lista_elemento_en_posicion(lista, posicion_deseada) != NULL ,
 	 "Se prueba insertar en cualquier posición en una lista vacia");
+
+	lista_destruir_todo(lista, "free");
 }
 
 void insertar_x_posicion_lista_elementos(){
@@ -89,6 +90,8 @@ void insertar_x_posicion_lista_elementos(){
 
 	pa2m_afirmar(lista_vacia(lista) == false && *elemento == 20,
 	 "Se prueba insertar en cualquier posición en una lista con elementos y se verifica que está en la posición correcta");
+
+	lista_destruir_todo(lista, "free");
 }
 
 void insertar_posicion_inexistente(){
@@ -105,6 +108,8 @@ void insertar_posicion_inexistente(){
 
 	pa2m_afirmar(lista_vacia(lista) == false && *ultimo_elemento == 20 && *elemento == 20 ,
 	 "Se prueba insertar en una posición inexistente en la lista, y se verifica que la posición de ese elemento es la última");
+
+	lista_destruir_todo(lista, "free");
 }
 
 void insertar_nulo_valido() {
@@ -116,6 +121,8 @@ void insertar_nulo_valido() {
                  lista_vacia(lista) == false && 
                  lista_elemento_en_posicion(lista, 5) != NULL, 
                  "Se prueba insertar un elemento nulo en una lista válida");
+
+	lista_destruir_todo(lista, "free");
 }
 
 void insertar_elem_repetido() {
@@ -130,6 +137,8 @@ void insertar_elem_repetido() {
 				*(int *)lista_elemento_en_posicion(lista, 0) == elem &&
 				*(int *)lista_elemento_en_posicion(lista, 1) == elem, 
                  "Se prueba insertar un elemento repetido en la lista");
+
+	lista_destruir_todo(lista, "free");
 }
 
 void quitar_de_lista_nula() {
@@ -147,7 +156,7 @@ void quitar_de_lista_vacia() {
 
     pa2m_afirmar(elemento == NULL, "No se puede quitar un elemento de una lista vacía");
 	
-	lista_destruir(lista);
+	lista_destruir_todo(lista, "free");
 }
 
 void quitar_ultimo_elemento() {
@@ -166,6 +175,8 @@ void quitar_ultimo_elemento() {
     pa2m_afirmar(*(int *)elemento_quitado == elem3 &&
 				*(int *)lista_ultimo(lista) == elem2, 
 				"Se prueba quitar el último elemento de una lista con elementos");
+
+	lista_destruir_todo(lista, "free");
 	
 }
 
@@ -186,7 +197,7 @@ void quitar_de_posicion_en_lista_vacia() {
 
     pa2m_afirmar(elemento == NULL, "No se puede quitar un elemento de cualquier posición en una lista vacía");
 
-    lista_destruir(lista);
+    lista_destruir_todo(lista, "free");
 }
 
 void quitar_elemento_de_posicion_en_lista_con_elementos() {
@@ -207,9 +218,7 @@ void quitar_elemento_de_posicion_en_lista_con_elementos() {
     pa2m_afirmar(*(int *)elemento_quitado == elem2,
 		"Se prueba quitar un elemento de cualquier posición de una lista con elementos");
 
-    // Limpia los recursos
-    // Si tienes una función para liberar la lista, úsala aquí
-    // lista_destruir(lista);
+    lista_destruir_todo(lista, "free");
 }
 
 void quitar_multiples_elementos_de_lista() {
@@ -231,7 +240,7 @@ void quitar_multiples_elementos_de_lista() {
 		*(int *)lista_ultimo(lista) != elem4 && *(int *)lista_elemento_en_posicion(lista, 0) != elem1, 
 		"Se prueba quitar múltiples elementos de una lista");
     
-	//lista_destruir(lista);
+	lista_destruir_todo(lista, "free");
 }
 
 void quitar_elemento_posicion_inexistente() {
@@ -249,7 +258,7 @@ void quitar_elemento_posicion_inexistente() {
     pa2m_afirmar(*(int *)elemento_quitado == elem3 && lista_ultimo(lista) != &elem3, 
 		"Se prueba quitar de una posición inexistente en la lista y el último elemento ya no está en la lista");
 
-    //lista_destruir(lista);
+    lista_destruir_todo(lista, "free");
 }
 
 void quitar_elemento_null() {
@@ -267,7 +276,7 @@ void quitar_elemento_null() {
     pa2m_afirmar(elemento_quitado == NULL && lista_elemento_en_posicion(lista, posicion) != NULL, 
 		"El elemento NULL ya no está en la lista");
 
-	 // lista_destruir(lista);
+	lista_destruir_todo(lista, "free");
 }
 
 void obtener_elemento_lista_nula() {
@@ -283,7 +292,7 @@ void obtener_elemento_lista_vacia() {
     void *elemento = lista_elemento_en_posicion(lista, 0);
     pa2m_afirmar(elemento == NULL, "No se puede obtener un elemento de una lista vacía");
 
-	lista_destruir(lista);
+	lista_destruir_todo(lista, "free");
 }
 
 void obtener_elemento_posicion_inexistente() {
@@ -295,7 +304,7 @@ void obtener_elemento_posicion_inexistente() {
     void *elemento = lista_elemento_en_posicion(lista, 5); // Posición inexistente
     pa2m_afirmar(elemento == NULL, "No se puede obtener un elemento de una posición inexistente");
 
-    // lista_destruir(lista);
+    lista_destruir_todo(lista, "free");
 }
 
 void obtener_elemento_posicion_existente() {
@@ -307,6 +316,56 @@ void obtener_elemento_posicion_existente() {
     void *elemento = lista_elemento_en_posicion(lista, 0);
     pa2m_afirmar(*(int *)elemento == elem1, "Se obtuvo correctamente el elemento de una posición existente");
 
+	lista_destruir_todo(lista, "free");
+}
+
+void obtener_cantidad_elementos_lista_nula() {
+    lista_t *lista = NULL; 
+
+    size_t cantidad = lista_tamanio(lista); 
+
+    pa2m_afirmar(cantidad == 0, "Se prueba obtener la cantidad de elementos de una lista nula");
+}
+
+void obtener_cantidad_elementos_lista_vacia() {
+    lista_t *lista = lista_crear(); 
+
+    size_t cantidad = lista_tamanio(lista); 
+
+    pa2m_afirmar(cantidad == 0, "Se prueba obtener la cantidad de elementos de una lista vacía");
+
+    lista_destruir_todo(lista, "free");
+}
+
+void obtener_cantidad_elementos_lista_con_elementos() {
+    lista_t *lista = lista_crear();
+
+    int elemento1 = 5;
+    int elemento2 = 10;
+    int elemento3 = 15;
+
+    lista_insertar(lista, &elemento1);
+    lista_insertar(lista, &elemento2);
+    lista_insertar(lista, &elemento3);
+
+    size_t cantidad = lista_tamanio(lista); 
+
+    pa2m_afirmar(cantidad == 3, "Se prueba obtener la cantidad de elementos de una lista con elementos");
+
+    lista_destruir_todo(lista, "free");
+}
+
+// void verificar_lista_nula_vacia() {
+//     lista_t *lista = NULL;
+
+
+//     pa2m_afirmar(lista_vacia(lista), "Una lista nula se considera vacía");
+// }
+
+void verificar_lista_vacia_vacia() {
+    lista_t *lista = lista_crear(); 
+
+    pa2m_afirmar(lista_vacia(lista), "Una lista recién creada se considera vacía");
 }
 
 
@@ -343,6 +402,11 @@ int main()
 	obtener_elemento_posicion_inexistente();
 	obtener_elemento_posicion_existente();
 
+	obtener_cantidad_elementos_lista_nula();
+	obtener_cantidad_elementos_lista_vacia();
+	obtener_cantidad_elementos_lista_con_elementos();
+
+	verificar_lista_vacia_vacia();
 
 	return pa2m_mostrar_reporte();
 }

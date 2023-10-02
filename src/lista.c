@@ -14,8 +14,8 @@ typedef struct lista {
 }lista;
 
 struct lista_iterador {
-	//y acá?
-	int sarasa;
+	nodo_t *nodo_actual;
+    lista_t *lista;
 };
 
 
@@ -222,10 +222,11 @@ void *lista_ultimo(lista_t *lista)
 	return lista->nodo_fin->elemento;
 }
 
-bool lista_vacia(lista_t *lista)
-{
-	return !lista || !lista->nodo_inicio;
+bool lista_vacia(lista_t *lista) {
+    if (!lista) return true;  
+    return lista->nodo_inicio == NULL; 
 }
+
 
 size_t lista_tamanio(lista_t *lista)
 {
@@ -249,42 +250,103 @@ size_t lista_tamanio(lista_t *lista)
 
 void lista_destruir(lista_t *lista)
 {
-	while(lista_tamanio(lista) > 0) {
-		free(lista);
-	}
+	nodo_t *nodo_actual = lista->nodo_inicio;
+
+    while(nodo_actual) {
+        nodo_t *nodo_a_eliminar = nodo_actual;
+        nodo_actual = nodo_actual->siguiente;
+        free(nodo_a_eliminar); 
+    }
+
+    free(lista);
 }
 
 void lista_destruir_todo(lista_t *lista, void (*funcion)(void *))
 {
-		
+	if(!lista) {
+        return; 
+    }
+
+    nodo_t *nodo_actual = lista->nodo_inicio;
+    while(nodo_actual) {
+        nodo_t *nodo_a_eliminar = nodo_actual;
+        nodo_actual = nodo_actual->siguiente;
+        
+        if(funcion) {
+            funcion(nodo_a_eliminar->elemento); 
+        }
+
+        free(nodo_a_eliminar);
+    }
+
+    free(lista);
 }
 
 lista_iterador_t *lista_iterador_crear(lista_t *lista)
 {
-	return NULL;
+	if (!lista) {
+        return NULL; 
+    }
+
+    lista_iterador_t *iterador = malloc(sizeof(lista_iterador_t));
+    if (!iterador) {
+        return NULL; 
+    }
+
+    iterador->lista = lista;
+    iterador->nodo_actual = lista->nodo_inicio; 
+
+    return iterador;
 }
 
 bool lista_iterador_tiene_siguiente(lista_iterador_t *iterador)
 {
-	return false;
+	if (!iterador || !iterador->nodo_actual) {
+        return false;
+    }
+    return iterador->nodo_actual->siguiente != NULL; 
 }
 
 bool lista_iterador_avanzar(lista_iterador_t *iterador)
 {
-	return false;
+	if (!iterador || !iterador->nodo_actual) {
+        return false;
+    }
+    iterador->nodo_actual = iterador->nodo_actual->siguiente;
+
+    return iterador->nodo_actual != NULL;
 }
 
 void *lista_iterador_elemento_actual(lista_iterador_t *iterador)
 {
-	return NULL;
+	if (!iterador || !iterador->nodo_actual) {
+        return NULL;
+    }
+    return iterador->nodo_actual->elemento;
 }
 
 void lista_iterador_destruir(lista_iterador_t *iterador)
 {
+	free(iterador);
 }
 
 size_t lista_con_cada_elemento(lista_t *lista, bool (*funcion)(void *, void *),
 			       void *contexto)
 {
-	return 0;
+	if (!lista || !funcion) {
+        return 0;
+    }
+
+    size_t elementos_iterados = 0;
+    nodo_t *nodo_actual = lista->nodo_inicio;
+
+    while (nodo_actual) {
+        if (!funcion(nodo_actual->elemento, contexto)) {
+            break; 
+        }
+        elementos_iterados++;
+        nodo_actual = nodo_actual->siguiente;
+    }
+
+    return elementos_iterados;
 }
