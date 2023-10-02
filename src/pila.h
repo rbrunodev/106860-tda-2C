@@ -1,49 +1,66 @@
-#ifndef PILA_H_
-#define PILA_H_
-#include <stdbool.h>
-#include <stdlib.h>
+#include "pila.h"
+#include "lista.h"
+struct _pila_t {
+  lista_t *lista;
+};
 
-typedef struct _pila_t pila_t;
+pila_t *pila_crear() {
+  pila_t *pila = malloc(sizeof(pila_t));
+  if (!pila) {
+    return NULL;
+  }
+  pila->lista = lista_crear();
+  if (!pila->lista) {
+    free(pila);
+    return NULL;
+  }
+  return pila;
+}
 
-/**
- * Crea una pila vacía y la devuelve.
- *
- * En caso de error devuelve NULL
- */
-pila_t *pila_crear();
+pila_t *pila_apilar(pila_t *pila, void *elemento) {
+  if (!pila) {
+    return NULL;
+  }
+  if (!lista_insertar(pila->lista, elemento)) {
+    return NULL;
+  }
+  return pila;
+}
 
-/**
- * Apila un elemento en la pila.
- *
- * Devuelve la pila o NULL en caso de error.
- */
-pila_t *pila_apilar(pila_t *pila, void *elemento);
+void *pila_desapilar(pila_t *pila) {
+  if (!pila || lista_vacia(pila->lista)) {
+    return NULL;
+  }
+  size_t ultima_posicion = lista_tamanio(pila->lista) - 1;
+  return lista_quitar_de_posicion(pila->lista, ultima_posicion);
+}
 
-/**
- * Desapila un elemento de la pila y lo devuelve.
- *
- * Devuelve NULL en caso de error.
- */
-void *pila_desapilar(pila_t *pila);
+void *pila_tope(pila_t *pila) {
+  if (!pila || lista_vacia(pila->lista)) {
+    return NULL;
+  }
+  size_t ultima_posicion = lista_tamanio(pila->lista) - 1;
+  return lista_elemento_en_posicion(pila->lista, ultima_posicion);
+}
 
-/**
- * Devuelve el elemento en el tope de la pila o NULL en caso de que no exista.
- */
-void *pila_tope(pila_t *pila);
+size_t pila_tamanio(pila_t *pila) {
+  if (!pila) {
+    return 0;
+  }
+  return lista_tamanio(pila->lista);
+}
 
-/**
- * Devuelve la cantidad de elementos de la pila o 0 si no existe.
- */
-size_t pila_tamanio(pila_t *pila);
+bool pila_vacia(pila_t *pila) {
+  if (!pila) {
+    return true;
+  }
+  return lista_vacia(pila->lista);
+}
 
-/**
- * Devuelve true si la pila tiene 0 elementos.
- */
-bool pila_vacia(pila_t *pila);
-
-/**
- * Libera la memoria reservada por la pila.
- */
-void pila_destruir(pila_t *pila);
-
-#endif // PILA_H_
+void pila_destruir(pila_t *pila) {
+  if (!pila) {
+    return;
+  }
+  lista_destruir(pila->lista);
+  free(pila);
+}
