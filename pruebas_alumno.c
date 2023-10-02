@@ -383,11 +383,11 @@ void obtener_cantidad_elementos_lista_con_elementos() {
   lista_destruir(lista);
 }
 
-// void verificar_lista_nula_vacia() {
-//     lista_t *lista = NULL;
+void verificar_lista_nula_vacia() {
+    lista_t *lista = NULL;
 
-//     pa2m_afirmar(lista_vacia(lista), "Una lista nula se considera vacía");
-// }
+    pa2m_afirmar(lista_vacia(lista), "Una lista nula se considera vacía");
+}
 
 void verificar_lista_vacia_vacia() {
   lista_t *lista = lista_crear();
@@ -438,6 +438,7 @@ int main() {
 
   pa2m_nuevo_grupo("\n======================== Pruebas de verificacion "
                    "========================");
+  verificar_lista_nula_vacia();
   verificar_lista_vacia_vacia();
 
   return pa2m_mostrar_reporte();
