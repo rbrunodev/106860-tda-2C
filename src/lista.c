@@ -60,10 +60,32 @@ lista_t *lista_insertar(lista_t *lista, void *elemento) {
   return lista;
 }
 
+size_t lista_tamanio(lista_t *lista) {
+  if (!lista)
+    return 0;
+
+  if (!lista->nodo_inicio)
+    return 0;
+
+  size_t contador = 0;
+  nodo_t *nodo_aux = lista->nodo_inicio;
+
+  while (nodo_aux) {
+    contador++;
+    nodo_aux = nodo_aux->siguiente;
+  }
+
+  return contador;
+}
+
 lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
                                     size_t posicion) {
   if (!lista)
     return NULL;
+
+  if (posicion >= lista_tamanio(lista)) {
+	return lista_insertar(lista, elemento);
+  }
 
   nodo_t *nuevo_nodo = nodo_crear(elemento);
   if (!nuevo_nodo)
@@ -222,24 +244,6 @@ bool lista_vacia(lista_t *lista) {
   if (!lista)
     return true;
   return lista->nodo_inicio == NULL;
-}
-
-size_t lista_tamanio(lista_t *lista) {
-  if (!lista)
-    return 0;
-
-  if (!lista->nodo_inicio)
-    return 0;
-
-  size_t contador = 0;
-  nodo_t *nodo_aux = lista->nodo_inicio;
-
-  while (nodo_aux) {
-    contador++;
-    nodo_aux = nodo_aux->siguiente;
-  }
-
-  return contador;
 }
 
 void lista_destruir(lista_t *lista) {
