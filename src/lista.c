@@ -59,6 +59,7 @@ lista_t *lista_insertar(lista_t *lista, void *elemento) {
   lista->nodo_fin = nuevo_nodo;
   return lista;
 }
+
 size_t lista_tamanio(lista_t *lista) {
   if (!lista)
     return 0;
@@ -74,7 +75,6 @@ size_t lista_tamanio(lista_t *lista) {
     nodo_aux = nodo_aux->siguiente;
   }
 
-  free(nodo_aux);
   return contador;
 }
 
@@ -83,7 +83,7 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
   if (!lista)
     return NULL;
 
-  if(!(lista_tamanio > posicion)){
+  if(lista_tamanio(lista) < posicion){
 	lista_insertar(lista, elemento);
 	return lista;
   }
