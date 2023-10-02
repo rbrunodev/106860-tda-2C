@@ -1,70 +1,49 @@
-#include "cola.h"
-#include "lista.h"
+#ifndef COLA_H_
+#define COLA_H_
+#include <stdbool.h>
+#include <stdlib.h>
 
-struct _cola_t {
-  lista_t *lista;
-};
+typedef struct _cola_t cola_t;
 
-cola_t *cola_crear() {
-  cola_t *cola = malloc(sizeof(cola_t));
-  if (!cola) {
-    return NULL;
-  }
+/**
+ * Crea una cola vacía y la devuelve.
+ *
+ * En caso de error devuelve NULL
+ */
+cola_t *cola_crear();
 
-  cola->lista = lista_crear();
-  if (!cola->lista) {
-    free(cola);
-    return NULL;
-  }
-  return cola;
-}
+/**
+ * Encola un elemento en la cola.
+ *
+ * Devuelve la cola o NULL en caso de error.
+ */
+cola_t *cola_encolar(cola_t *cola, void *elemento);
 
-cola_t *cola_encolar(cola_t *cola, void *elemento) {
-  if (!cola) {
-    return false;
-  }
+/**
+ * Desencola un elemento de la cola y lo devuelve.
+ *
+ * Devuelve NULL en caso de error.
+ */
+void *cola_desencolar(cola_t *cola);
 
-  if (!lista_insertar(cola->lista, elemento)) {
-    return NULL;
-  }
-  return cola;
-}
+/**
+ * Devuelve el elemento en el frente de la cola o NULL en caso de que no exista.
+ */
+void *cola_frente(cola_t *cola);
 
-void *cola_desencolar(cola_t *cola) {
-  if (!cola || lista_vacia(cola->lista)) {
-    return NULL;
-  }
+/**
+ * Devuelve la cantidad de elementos de la cola o 0 si no existe.
+ */
+size_t cola_tamanio(cola_t *cola);
 
-  return lista_quitar_de_posicion(cola->lista, 0);
-}
+/**
+ * Devuelve true si la cola tiene 0 elementos.
+ */
+bool cola_vacia(cola_t *cola);
 
-void *cola_frente(cola_t *cola) {
-  if (!cola || lista_vacia(cola->lista)) {
-    return NULL;
-  }
+/**
+ * Libera la memoria reservada por la cola.
+ */
+void cola_destruir(cola_t *cola);
 
-  return lista_elemento_en_posicion(cola->lista, 0);
-}
-
-size_t cola_tamanio(cola_t *cola) {
-  if (!cola) {
-    return 0;
-  }
-  return lista_tamanio(cola->lista);
-}
-
-bool cola_vacia(cola_t *cola) {
-  if (!cola) {
-    return true;
-  }
-  return lista_vacia(cola->lista);
-}
-
-void cola_destruir(cola_t *cola) {
-  if (!cola) {
-    return;
-  }
-
-  lista_destruir(cola->lista);
-  free(cola);
-}
+#endif // COLA_H_
