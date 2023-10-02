@@ -167,7 +167,6 @@ void quitar_ultimo_elemento() {
 				*(int *)lista_ultimo(lista) == elem2, 
 				"Se prueba quitar el último elemento de una lista con elementos");
 	
-	// lista_destruir(lista);
 }
 
 void quitar_de_posicion_en_lista_nula() {
@@ -308,7 +307,6 @@ void obtener_elemento_posicion_existente() {
     void *elemento = lista_elemento_en_posicion(lista, 0);
     pa2m_afirmar(*(int *)elemento == elem1, "Se obtuvo correctamente el elemento de una posición existente");
 
-   // lista_destruir(lista);
 }
 
 

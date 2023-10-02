@@ -132,13 +132,13 @@ void *lista_quitar(lista_t *lista)
 	nodo_inicial->siguiente = NULL;
 	lista->nodo_fin = nodo_inicial;
 
-	return elemento;
+	return elemento; 
 }
 
 void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 {
     if(!lista)
-        return NULL;
+		return NULL;
 	
 	if(!lista->nodo_inicio)
 		return NULL;
