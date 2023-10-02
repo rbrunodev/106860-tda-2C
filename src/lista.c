@@ -159,6 +159,16 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion)
 	nodo_t *nodo_inicial = lista->nodo_inicio;
 	nodo_t *nodo_anterior = NULL;
 
+
+	if (posicion == 0) {
+		lista->nodo_inicio = nodo_inicial->siguiente;
+		if (!lista->nodo_inicio) { 
+			lista->nodo_fin = NULL;
+		void *elemento = nodo_inicial->elemento;
+    	free(nodo_inicial);
+		return elemento;
+	}
+
 	for (size_t i = 0; i < posicion; i++) {
 		if (!nodo_inicial->siguiente)
 			return lista_quitar(lista);
