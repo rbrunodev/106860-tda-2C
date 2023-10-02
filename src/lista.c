@@ -85,16 +85,6 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
     i++;
   }
 
-  while (i < posicion - 1) {
-    nodo_t *nodo_vacio = nodo_crear(NULL);
-    if (!nodo_vacio)
-      return NULL;
-
-    nodo_ant->siguiente = nodo_vacio;
-    nodo_ant = nodo_vacio;
-    i++;
-  }
-
   nuevo_nodo->siguiente = nodo_ant->siguiente;
   nodo_ant->siguiente = nuevo_nodo;
 

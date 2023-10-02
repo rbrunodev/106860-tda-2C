@@ -104,11 +104,10 @@ void insertar_posicion_inexistente(){
 	int elem_insertar = 20;
 	
 	lista_insertar_en_posicion(lista, &elem_insertar, posicion_deseada);
-	int *elemento = (int *)lista_elemento_en_posicion(lista, posicion_deseada);
 
 	int *ultimo_elemento = (int *)lista_ultimo(lista);
 
-	pa2m_afirmar(lista_vacia(lista) == false && *ultimo_elemento == 20 && *elemento == 20 ,
+	pa2m_afirmar(lista_vacia(lista) == false && *ultimo_elemento == 20 && lista_elemento_en_posicion(lista, posicion_deseada) == NULL ,
 	 "Se prueba insertar en una posición inexistente en la lista, y se verifica que la posición de ese elemento es la última");
 
 	lista_destruir(lista);
@@ -376,7 +375,7 @@ int main()
 	pa2m_nuevo_grupo("------------ PRUEBAS DEL TDA ------------");
 
 	pa2m_nuevo_grupo(
-		"\n======================== XXX ========================");
+		"\n======================== Pruebas de insercion ========================");
 	
 	crear_lista_vacia();
 	insertar_final_lista_vacia();
@@ -389,6 +388,8 @@ int main()
 	insertar_nulo_valido();
 	insertar_elem_repetido();
 
+	pa2m_nuevo_grupo(
+		"\n======================== Pruebas de eliminacion ========================");
 	quitar_de_lista_nula();
 	quitar_de_lista_vacia();
 	quitar_ultimo_elemento();
@@ -399,15 +400,18 @@ int main()
 	quitar_elemento_posicion_inexistente();
 	quitar_elemento_null();
 
+	pa2m_nuevo_grupo(
+		"\n======================== Pruebas de obtencion ========================");
 	obtener_elemento_lista_nula();
 	obtener_elemento_lista_vacia();
 	obtener_elemento_posicion_inexistente();
 	obtener_elemento_posicion_existente();
-
 	obtener_cantidad_elementos_lista_nula();
 	obtener_cantidad_elementos_lista_vacia();
 	obtener_cantidad_elementos_lista_con_elementos();
 
+	pa2m_nuevo_grupo(
+		"\n======================== Pruebas de verificacion ========================");
 	verificar_lista_vacia_vacia();
 
 	return pa2m_mostrar_reporte();
