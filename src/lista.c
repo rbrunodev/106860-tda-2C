@@ -292,10 +292,10 @@ lista_iterador_t *lista_iterador_crear(lista_t *lista) {
 }
 
 bool lista_iterador_tiene_siguiente(lista_iterador_t *iterador) {
-  if (!iterador || !iterador->nodo_actual) {
+  if (!iterador) {
     return false;
   }
-  return iterador->nodo_actual->siguiente != NULL;
+  return iterador->nodo_actual != NULL;
 }
 
 bool lista_iterador_avanzar(lista_iterador_t *iterador) {
