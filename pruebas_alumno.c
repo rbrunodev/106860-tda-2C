@@ -394,6 +394,7 @@ void verificar_lista_vacia_vacia() {
 
   pa2m_afirmar(lista_vacia(lista),
                "Una lista recién creada se considera vacía");
+  lista_destruir(lista);
 }
 
 int main() {
