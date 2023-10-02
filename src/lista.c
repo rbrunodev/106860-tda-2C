@@ -274,9 +274,6 @@ static void lista_destruir_nodos(lista_t *lista, void (*funcion)(void *)) {
 }
 
 void lista_destruir(lista_t *lista) {
-    if (!lista) {
-        return;
-    }
     lista_destruir_nodos(lista, NULL); 
     free(lista);
 }
@@ -285,7 +282,7 @@ void lista_destruir_todo(lista_t *lista, void (*funcion)(void *)) {
     if (!lista) {
         return;
     }
-    lista_destruir_nodos(lista, funcion); 
+    _lista_destruir_nodos(lista, funcion); 
     free(lista);
 }
 
