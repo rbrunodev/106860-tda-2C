@@ -70,7 +70,7 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
   if (!lista)
     return NULL;
 
-  if (posicion > lista->cantidad) {
+  if (posicion >= lista->cantidad) {
     return lista_insertar(lista, elemento);
   }
 
@@ -85,6 +85,9 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
     return lista;
   }
 
+  if(posicion == 1 && lista->cantidad == 1){
+    return lista_insertar(lista, elemento);
+  }
   nodo_t *anterior = lista->nodo_inicio;
 
   nodo_t *nodo_ant = lista->nodo_inicio;
@@ -96,8 +99,9 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
   nuevo_nodo->siguiente = nodo_ant->siguiente;
   nodo_ant->siguiente = nuevo_nodo;
 
-  // if (!nuevo_nodo->siguiente)
-  //   lista->nodo_fin = nuevo_nodo;
+  if (!nuevo_nodo->siguiente)
+    lista->nodo_fin = nuevo_nodo;
+    
   lista->cantidad++;
   return lista;
 }
