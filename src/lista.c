@@ -87,10 +87,12 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
   if (!nuevo_nodo)
     return NULL;
 
-  if (posicion == 0 || !lista->nodo_inicio) {
+  // if (posicion == 0 || !lista->nodo_inicio) {
+  if (posicion == 0) {
     nuevo_nodo->siguiente = lista->nodo_inicio;
     lista->nodo_inicio = nuevo_nodo;
-    if (!lista->nodo_fin || posicion == 0) {
+    // if (!lista->nodo_fin || posicion == 0) {
+    if (!lista->nodo_fin) {
       lista->nodo_fin = nuevo_nodo;
     }
     return lista;
@@ -152,33 +154,44 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion) {
   nodo_t *nodo_eliminar = NULL;
   void *elemento = NULL;
 
-  if(posicion == 0){
-    nodo_eliminar = lista->nodo_inicio;
-    lista->nodo_inicio = nodo_eliminar->siguiente;
-    if(!lista->nodo_inicio)
+  // if(posicion == 0){
+  //   nodo_eliminar = lista->nodo_inicio;
+  //   lista->nodo_inicio = nodo_eliminar->siguiente;
+  //   if(!lista->nodo_inicio)
+  //     lista->nodo_fin = NULL;
+  //   elemento = nodo_eliminar->elemento;
+  //   free(nodo_eliminar);
+  //   return elemento;
+  // }
+
+  nodo_t *nodo_inicial = lista->nodo_inicio;
+  nodo_t *nodo_anterior = NULL;
+
+  for (size_t i = 0; i < posicion; i++) {
+    if (!nodo_inicial->siguiente)
+      return lista_quitar(lista);
+    nodo_anterior = nodo_inicial;
+    nodo_inicial = nodo_inicial->siguiente;
+  }
+
+  elemento = nodo_inicial->elemento;
+
+  if (!nodo_anterior) {
+    lista->nodo_inicio = nodo_inicial->siguiente;
+    if (!lista->nodo_inicio)
       lista->nodo_fin = NULL;
-    elemento = nodo_eliminar->elemento;
-    free(nodo_eliminar);
+    free(nodo_inicial);
+    return elemento;
+  }
+  if (!nodo_inicial->siguiente) {
+    lista->nodo_fin = nodo_anterior;
+    nodo_anterior->siguiente = NULL;
+    free(nodo_inicial);
     return elemento;
   }
 
-  nodo_t *nodo_anterior = lista->nodo_inicio;
-  for (size_t i = 0; i < posicion - 1 && nodo_anterior->siguiente; i++) {
-      nodo_anterior = nodo_anterior->siguiente;
-  }
-
-  nodo_eliminar = nodo_anterior->siguiente;
-  if (!nodo_eliminar) { 
-      return NULL;
-  }
-
-  nodo_anterior->siguiente = nodo_eliminar->siguiente;
-  if (!nodo_anterior->siguiente) { 
-      lista->nodo_fin = nodo_anterior;
-  }
-
-  elemento = nodo_eliminar->elemento;
-  free(nodo_eliminar);
+  nodo_anterior->siguiente = nodo_inicial->siguiente;
+  free(nodo_inicial);
   return elemento;
 }
 
