@@ -182,7 +182,20 @@ void *lista_elemento_en_posicion(lista_t *lista, size_t posicion) {
 
 void *lista_buscar_elemento(lista_t *lista, int (*comparador)(void *, void *),
                             void *contexto) {
-  return NULL;
+  if (!lista || !comparador) {
+        return NULL;
+    }
+
+    nodo_t *nodo_actual = lista->nodo_inicio;
+
+    while (nodo_actual) {
+        if (comparador(nodo_actual->elemento, contexto) == 0) {
+            return nodo_actual->elemento;
+        }
+        nodo_actual = nodo_actual->siguiente;
+    }
+
+    return NULL;
 }
 
 void *lista_primero(lista_t *lista) {
