@@ -4,23 +4,23 @@
 
 # NOMBRE TP/TDA
 
-## Repositorio de (Nombre Apellido) - (Padrón) - (Mail)
+## Repositorio de Renata Bruno - 106860 - rc.brunoo@gmail.com
 
 - Para compilar:
 
 ```bash
-línea de compilación
+gcc -o pruebas_alumno pruebas_alumno.c
 ```
 
 - Para ejecutar:
 
 ```bash
-línea de ejecución
+./pruebas_alumno 
 ```
 
 - Para ejecutar con valgrind:
 ```bash
-línea con valgrind
+valgrind ./pruebas_alumno 
 ```
 ---
 ##  Funcionamiento
@@ -31,30 +31,25 @@ Aclarar en esta parte todas las decisiones que se tomaron al realizar el TP, cos
 
 Incluír **EN TODOS LOS TPS** los diagramas relevantes al problema (mayormente diagramas de memoria para explicar las estructuras, pero se pueden utilizar otros diagramas si es necesario).
 
-### Por ejemplo:
-
-El programa funciona abriendo el archivo pasado como parámetro y leyendolo línea por línea. Por cada línea crea un registro e intenta agregarlo al vector. La función de lectura intenta leer todo el archivo o hasta encontrar el primer error. Devuelve un vector con todos los registros creados.
-
-<div align="center">
-<img width="70%" src="img/diagrama1.svg">
-</div>
-
-En el archivo `sarasa.c` la función `funcion1` utiliza `realloc` para agrandar la zona de memoria utilizada para conquistar el mundo. El resultado de `realloc` lo guardo en una variable auxiliar para no perder el puntero original en caso de error:
-
-```c
-int *vector = realloc(vector_original, (n+1)*sizeof(int));
-
-if(vector == NULL)
-    return -1;
-vector_original = vector;
-```
-
-
-<div align="center">
-<img width="70%" src="img/diagrama2.svg">
-</div>
-
 ---
 
 ## Respuestas a las preguntas teóricas
-Incluír acá las respuestas a las preguntas del enunciado (si aplica).
+- ¿Qué es una lista/pila/cola? Explicar con diagramas.
+Una lista es una estructura de datos que permite almacenar datos de manera secuencial. Cada elemento de la lista tiene un dato y un puntero al siguiente elemento de la lista. 
+
+<div align="center">
+<img width="70%" src="img/diagrama.png">
+</div>
+
+Una pila es una estructura de datos que permite almacenar datos de manera secuencial. Cada elemento de la pila tiene un dato y un puntero al siguiente elemento de la pila. La diferencia con la lista es que la pila solo permite agregar y quitar elementos por el mismo extremo, el tope de la pila.
+
+<div align="center">
+<img width="70%" src="img/diagrama.png">
+</div>
+
+Una cola es una estructura de datos que permite almacenar datos de manera secuencial. Cada elemento de la cola tiene un dato y un puntero al siguiente elemento de la cola. La diferencia con la lista es que la cola solo permite agregar elementos por un extremo, el final de la cola, y quitar elementos por el otro extremo, el principio de la cola.
+
+<div align="center">
+<img width="70%" src="img/diagrama.png">
+</div>
+
