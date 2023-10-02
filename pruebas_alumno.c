@@ -56,14 +56,25 @@ void insertar_elemento_null_final(){
 	 "Se prueba insertar al final en una lista nula");
 }
 
-void insertar_x_posicion_lista_nula(){}
+void insertar_x_posicion_lista_nula(){
+	lista_t *lista = NULL;
+	int elemento1 = 14;
+	size_t posicion_deseada = 2; 
+
+	pa2m_afirmar(lista_insertar_en_posicion(lista, &elemento1, posicion_deseada) == NULL && lista_elemento_en_posicion(lista, posicion_deseada) == NULL ,
+	 "No se puede insertar en cualquier posición en una lista nula");
+
+}
 
 void insertar_x_posicion_lista_vacia(){
 	lista_t *lista = lista_crear();
-	int elemento1 = 14;
+	// int elemento1 = 14;
+	size_t posicion_deseada = 4; 
 
-	pa2m_afirmar(lista_insertar_en_posicion(lista, &elemento1, 4) == lista && lista_vacia(lista) == false && lista_elemento_en_posicion(lista, 4) != NULL ,
-	 "Se prueba insertar en cualquier posición en una lista nula");
+	// lista_insertar_en_posicion(lista, &elemento1, posicion_deseada);
+
+	pa2m_afirmar(lista_elemento_en_posicion(lista, posicion_deseada) != NULL ,
+	 "Se prueba insertar en cualquier posición en una lista vacia");
 }
 
 void insertar_x_posicion_lista_elementos(){
@@ -89,7 +100,6 @@ void insertar_posicion_inexistente(){
 	
 	lista_insertar_en_posicion(lista, &elem_insertar, posicion_deseada);
 	int *elemento = (int *)lista_elemento_en_posicion(lista, posicion_deseada);
-	printf("%d", *elemento);
 
 	int *ultimo_elemento = (int *)lista_ultimo(lista);
 
@@ -108,6 +118,199 @@ void insertar_nulo_valido() {
                  "Se prueba insertar un elemento nulo en una lista válida");
 }
 
+void insertar_elem_repetido() {
+    lista_t *lista = lista_crear();
+
+    int elem = 42;
+
+    lista_insertar(lista, &elem); 
+    lista_insertar(lista, &elem);
+
+    pa2m_afirmar(lista_vacia(lista) == false &&
+				*(int *)lista_elemento_en_posicion(lista, 0) == elem &&
+				*(int *)lista_elemento_en_posicion(lista, 1) == elem, 
+                 "Se prueba insertar un elemento repetido en la lista");
+}
+
+void quitar_de_lista_nula() {
+    lista_t *lista = NULL; 
+
+    void *elemento = lista_quitar(lista); 
+
+    pa2m_afirmar(elemento == NULL, "No se puede quitar un elemento de una lista nula");
+}
+
+void quitar_de_lista_vacia() {
+    lista_t *lista = lista_crear();
+
+    void *elemento = lista_quitar(lista);
+
+    pa2m_afirmar(elemento == NULL, "No se puede quitar un elemento de una lista vacía");
+	
+	lista_destruir(lista);
+}
+
+void quitar_ultimo_elemento() {
+    lista_t *lista = lista_crear();
+
+    int elem1 = 10;
+    int elem2 = 20;
+    int elem3 = 30;
+
+    lista_insertar(lista, &elem1);
+    lista_insertar(lista, &elem2);
+    lista_insertar(lista, &elem3);
+
+    void *elemento_quitado = lista_quitar(lista);
+
+    pa2m_afirmar(*(int *)elemento_quitado == elem3 &&
+				*(int *)lista_ultimo(lista) == elem2, 
+				"Se prueba quitar el último elemento de una lista con elementos");
+	
+	// lista_destruir(lista);
+}
+
+void quitar_de_posicion_en_lista_nula() {
+    lista_t *lista = NULL;
+
+    size_t posicion = 2; 
+    void *elemento = lista_quitar_de_posicion(lista, posicion); 
+
+    pa2m_afirmar(elemento == NULL, "No se puede quitar un elemento de cualquier posición en una lista nula");
+}
+
+void quitar_de_posicion_en_lista_vacia() {
+    lista_t *lista = lista_crear(); 
+
+    size_t posicion = 2;
+    void *elemento = lista_quitar_de_posicion(lista, posicion); 
+
+    pa2m_afirmar(elemento == NULL, "No se puede quitar un elemento de cualquier posición en una lista vacía");
+
+    lista_destruir(lista);
+}
+
+void quitar_elemento_de_posicion_en_lista_con_elementos() {
+    lista_t *lista = lista_crear(); 
+
+    int elem1 = 10;
+    int elem2 = 20;
+    int elem3 = 30;
+
+    lista_insertar(lista, &elem1);
+    lista_insertar(lista, &elem2);
+    lista_insertar(lista, &elem3);
+
+    size_t posicion = 1; 
+    void *elemento_quitado = lista_quitar_de_posicion(lista, posicion);
+
+  
+    pa2m_afirmar(*(int *)elemento_quitado == elem2,
+		"Se prueba quitar un elemento de cualquier posición de una lista con elementos");
+
+    // Limpia los recursos
+    // Si tienes una función para liberar la lista, úsala aquí
+    // lista_destruir(lista);
+}
+
+void quitar_multiples_elementos_de_lista() {
+    lista_t *lista = lista_crear(); 
+
+    int elem1 = 10;
+    int elem2 = 20;
+    int elem3 = 30;
+    int elem4 = 40;
+
+    lista_insertar(lista, &elem1);
+    lista_insertar(lista, &elem2);
+    lista_insertar(lista, &elem3);
+    lista_insertar(lista, &elem4);
+
+    void *elemento_quitado1 = lista_quitar_de_posicion(lista, 0);
+    void *elemento_quitado2 = lista_quitar(lista);
+    pa2m_afirmar(*(int *)elemento_quitado1 == elem1 && *(int *)elemento_quitado2 == elem4 && 
+		*(int *)lista_ultimo(lista) != elem4 && *(int *)lista_elemento_en_posicion(lista, 0) != elem1, 
+		"Se prueba quitar múltiples elementos de una lista");
+    
+	//lista_destruir(lista);
+}
+
+void quitar_elemento_posicion_inexistente() {
+    lista_t *lista = lista_crear(); 
+
+    int elem1 = 10;
+    int elem2 = 20;
+    int elem3 = 30;
+
+    lista_insertar(lista, &elem1);
+    lista_insertar(lista, &elem2);
+    lista_insertar(lista, &elem3);
+
+    void *elemento_quitado = lista_quitar_de_posicion(lista, 5);
+    pa2m_afirmar(*(int *)elemento_quitado == elem3 && lista_ultimo(lista) != &elem3, 
+		"Se prueba quitar de una posición inexistente en la lista y el último elemento ya no está en la lista");
+
+    //lista_destruir(lista);
+}
+
+void quitar_elemento_null() {
+    lista_t *lista = lista_crear(); 
+
+    int elem1 = 10;
+    int elem2 = 20;
+	size_t posicion = 1;
+
+    lista_insertar(lista, &elem1);
+    lista_insertar(lista, NULL);
+    lista_insertar(lista, &elem2);
+
+    void *elemento_quitado = lista_quitar_de_posicion(lista, posicion); 
+    pa2m_afirmar(elemento_quitado == NULL && lista_elemento_en_posicion(lista, posicion) != NULL, 
+		"El elemento NULL ya no está en la lista");
+
+	 // lista_destruir(lista);
+}
+
+void obtener_elemento_lista_nula() {
+    lista_t *lista = NULL;
+
+    void *elemento = lista_elemento_en_posicion(lista, 0);
+    pa2m_afirmar(elemento == NULL, "No se puede obtener un elemento de una lista nula");
+}
+
+void obtener_elemento_lista_vacia() {
+    lista_t *lista = lista_crear(); 
+
+    void *elemento = lista_elemento_en_posicion(lista, 0);
+    pa2m_afirmar(elemento == NULL, "No se puede obtener un elemento de una lista vacía");
+
+	lista_destruir(lista);
+}
+
+void obtener_elemento_posicion_inexistente() {
+    lista_t *lista = lista_crear();
+
+    int elem1 = 10;
+    lista_insertar(lista, &elem1);
+
+    void *elemento = lista_elemento_en_posicion(lista, 5); // Posición inexistente
+    pa2m_afirmar(elemento == NULL, "No se puede obtener un elemento de una posición inexistente");
+
+    // lista_destruir(lista);
+}
+
+void obtener_elemento_posicion_existente() {
+    lista_t *lista = lista_crear();
+
+    int elem1 = 10;
+    lista_insertar(lista, &elem1);
+
+    void *elemento = lista_elemento_en_posicion(lista, 0);
+    pa2m_afirmar(*(int *)elemento == elem1, "Se obtuvo correctamente el elemento de una posición existente");
+
+   // lista_destruir(lista);
+}
+
 
 int main()
 {
@@ -121,9 +324,26 @@ int main()
 	verificar_posicion_insertar_final();
 	insertar_elemento_null_final();
 	insertar_x_posicion_lista_nula();
+	insertar_x_posicion_lista_vacia();
 	insertar_x_posicion_lista_elementos();
 	insertar_posicion_inexistente();
 	insertar_nulo_valido();
+	insertar_elem_repetido();
+
+	quitar_de_lista_nula();
+	quitar_de_lista_vacia();
+	quitar_ultimo_elemento();
+	quitar_de_posicion_en_lista_nula();
+	quitar_de_posicion_en_lista_vacia();
+	quitar_elemento_de_posicion_en_lista_con_elementos();
+	quitar_multiples_elementos_de_lista();
+	quitar_elemento_posicion_inexistente();
+	quitar_elemento_null();
+
+	obtener_elemento_lista_nula();
+	obtener_elemento_lista_vacia();
+	obtener_elemento_posicion_inexistente();
+	obtener_elemento_posicion_existente();
 
 
 	return pa2m_mostrar_reporte();
