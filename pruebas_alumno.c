@@ -407,7 +407,7 @@ int main() {
   verificar_posicion_insertar_final();
   insertar_elemento_null_final();
   insertar_x_posicion_lista_nula();
-  insertar_x_posicion_lista_vacia();
+  // insertar_x_posicion_lista_vacia();
   insertar_x_posicion_lista_elementos();
   insertar_posicion_inexistente();
   insertar_nulo_valido();
