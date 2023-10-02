@@ -75,7 +75,7 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
     if (!lista->nodo_fin) {
       lista->nodo_fin = nuevo_nodo;
     }
-	return lista;
+    return lista;
   }
 
   nodo_t *nodo_ant = lista->nodo_inicio;
@@ -108,7 +108,7 @@ void *lista_quitar(lista_t *lista) {
   if (lista->nodo_inicio == lista->nodo_fin) {
     lista->nodo_inicio = NULL;
     lista->nodo_fin = NULL;
-	free(ultimo_nodo);  
+    free(ultimo_nodo);
     return elemento;
   }
 
@@ -119,7 +119,7 @@ void *lista_quitar(lista_t *lista) {
   }
   nodo_inicial->siguiente = NULL;
   lista->nodo_fin = nodo_inicial;
-  free(ultimo_nodo);  
+  free(ultimo_nodo);
 
   return elemento;
 }
@@ -183,19 +183,19 @@ void *lista_elemento_en_posicion(lista_t *lista, size_t posicion) {
 void *lista_buscar_elemento(lista_t *lista, int (*comparador)(void *, void *),
                             void *contexto) {
   if (!lista || !comparador) {
-        return NULL;
-    }
-
-    nodo_t *nodo_actual = lista->nodo_inicio;
-
-    while (nodo_actual) {
-        if (comparador(nodo_actual->elemento, contexto) == 0) {
-            return nodo_actual->elemento;
-        }
-        nodo_actual = nodo_actual->siguiente;
-    }
-
     return NULL;
+  }
+
+  nodo_t *nodo_actual = lista->nodo_inicio;
+
+  while (nodo_actual) {
+    if (comparador(nodo_actual->elemento, contexto) == 0) {
+      return nodo_actual->elemento;
+    }
+    nodo_actual = nodo_actual->siguiente;
+  }
+
+  return NULL;
 }
 
 void *lista_primero(lista_t *lista) {
@@ -228,8 +228,8 @@ size_t lista_tamanio(lista_t *lista) {
   if (!lista)
     return 0;
 
-  if(!lista->nodo_inicio)
-  	return 0;
+  if (!lista->nodo_inicio)
+    return 0;
 
   size_t contador = 0;
   nodo_t *nodo_aux = lista->nodo_inicio;
@@ -326,10 +326,10 @@ size_t lista_con_cada_elemento(lista_t *lista, bool (*funcion)(void *, void *),
   nodo_t *nodo_actual = lista->nodo_inicio;
 
   while (nodo_actual) {
+    elementos_iterados++;
     if (!funcion(nodo_actual->elemento, contexto)) {
       break;
     }
-    elementos_iterados++;
     nodo_actual = nodo_actual->siguiente;
   }
 
