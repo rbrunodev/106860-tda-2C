@@ -11,6 +11,7 @@ cola_t *cola_crear()
     if (!cola) {
         return NULL;
     }
+	
     cola->lista = lista_crear();
     if (!cola->lista) {
         free(cola);
@@ -24,7 +25,11 @@ cola_t *cola_encolar(cola_t *cola, void *elemento)
 	if (!cola) {
         return false;
     }
-    return lista_insertar(cola->lista, elemento);
+	
+	if (!lista_insertar(cola->lista, elemento)) {
+        return NULL;
+    }
+    return cola;
 }
 
 void *cola_desencolar(cola_t *cola)
@@ -66,7 +71,7 @@ void cola_destruir(cola_t *cola)
 	if (!cola) {
         return;
     }
-	
+
     lista_destruir(cola->lista);
     free(cola);
 }
