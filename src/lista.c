@@ -151,7 +151,7 @@ void *lista_quitar_de_posicion(lista_t *lista, size_t posicion) {
   if (!lista->nodo_inicio)
     return NULL;
 
-  nodo_t *nodo_eliminar = NULL;
+  // nodo_t *nodo_eliminar = NULL;
   void *elemento = NULL;
 
   // if(posicion == 0){
