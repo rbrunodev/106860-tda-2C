@@ -249,7 +249,7 @@ void lista_destruir(lista_t *lista) {
     return;
   }
 
-  if(!lista->nodo_inicio && !lista->nodo_fin){
+  if(!lista->nodo_inicio || !lista->nodo_fin){
     free(lista);
     return;
   }
