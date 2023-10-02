@@ -245,6 +245,10 @@ bool lista_vacia(lista_t *lista) {
 }
 
 void lista_destruir(lista_t *lista) {
+  if(!lista){
+    return;
+  }
+  
   nodo_t *nodo_actual = lista->nodo_inicio;
 
   while (nodo_actual) {
