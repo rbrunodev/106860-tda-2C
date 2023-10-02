@@ -72,7 +72,7 @@ lista_t *lista_insertar_en_posicion(lista_t *lista, void *elemento,
   if (posicion == 0 || !lista->nodo_inicio) {
     nuevo_nodo->siguiente = lista->nodo_inicio;
     lista->nodo_inicio = nuevo_nodo;
-    if (!lista->nodo_fin) {
+    if (!lista->nodo_fin || posicion == 0) {
       lista->nodo_fin = nuevo_nodo;
     }
     return lista;
