@@ -20,7 +20,7 @@ void insertar_final_lista_vacia()
 	pa2m_afirmar(lista_insertar(lista, &elemento) == lista &&
 			     lista_vacia(lista) == false &&
 			     lista_tamanio(lista) == 1,
-		     "Se prueba insertar al final en una lista nula");
+		     "Se prueba insertar al final en una lista vacia");
 
 	lista_destruir(lista);
 }
@@ -87,12 +87,11 @@ void insertar_x_posicion_lista_nula()
 void insertar_x_posicion_lista_vacia()
 {
 	lista_t *lista = lista_crear();
-	// int elemento1 = 14;
+	int elemento1 = 14;
 	size_t posicion_deseada = 4;
 
-	// lista_insertar_en_posicion(lista, &elemento1, posicion_deseada);
-
 	pa2m_afirmar(
+		lista_insertar_en_posicion(lista, &elemento1, posicion_deseada) != NULL &&
 		lista_elemento_en_posicion(lista, posicion_deseada) != NULL,
 		"Se prueba insertar en cualquier posición en una lista vacia");
 
