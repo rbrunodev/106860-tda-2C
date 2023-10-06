@@ -91,10 +91,12 @@ void insertar_x_posicion_lista_vacia()
 	size_t posicion_deseada = 4;
 
 	pa2m_afirmar(
-		lista_insertar_en_posicion(lista, &elemento1, posicion_deseada) != NULL &&
-		lista_elemento_en_posicion(lista, posicion_deseada) != NULL,
+		lista_insertar_en_posicion(lista, &elemento1,
+					   posicion_deseada) == NULL &&
+			lista_elemento_en_posicion(lista, posicion_deseada) ==
+				NULL,
 		"Se prueba insertar en cualquier posición en una lista vacia");
-
+	
 	lista_destruir(lista);
 }
 
