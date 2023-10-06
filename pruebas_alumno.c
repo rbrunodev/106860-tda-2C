@@ -84,22 +84,6 @@ void insertar_x_posicion_lista_nula()
 		"No se puede insertar en cualquier posición en una lista nula");
 }
 
-void insertar_x_posicion_lista_vacia()
-{
-	lista_t *lista = lista_crear();
-	int elemento1 = 14;
-	size_t posicion_deseada = 4;
-
-	pa2m_afirmar(
-		lista_insertar_en_posicion(lista, &elemento1,
-					   posicion_deseada) == NULL &&
-			lista_elemento_en_posicion(lista, posicion_deseada) ==
-				NULL,
-		"Se prueba insertar en cualquier posición en una lista vacia");
-	
-	lista_destruir(lista);
-}
-
 void insertar_x_posicion_lista_elementos()
 {
 	lista_t *lista = lista_crear();
@@ -459,7 +443,6 @@ int main()
 	verificar_posicion_insertar_final();
 	insertar_elemento_null_final();
 	insertar_x_posicion_lista_nula();
-	// insertar_x_posicion_lista_vacia();
 	insertar_x_posicion_lista_elementos();
 	insertar_posicion_inexistente();
 	insertar_nulo_valido();
